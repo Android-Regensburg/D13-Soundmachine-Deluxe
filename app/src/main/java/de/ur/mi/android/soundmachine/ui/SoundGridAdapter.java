@@ -1,6 +1,5 @@
 package de.ur.mi.android.soundmachine.ui;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,65 +10,57 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import de.ur.mi.android.soundmachine.R;
-import de.ur.mi.android.soundmachine.sounds.Sound;
-import de.ur.mi.android.soundmachine.sounds.SoundStatusListener;
+import de.ur.mi.android.soundmachine.sounds.SoundProxy;
+import de.ur.mi.android.soundmachine.sounds.SoundState;
 
-public class SoundGridAdapter extends RecyclerView.Adapter<SoundGridViewHolder> implements SoundButtonClickedListener, SoundStatusListener {
+public class SoundGridAdapter extends RecyclerView.Adapter<SoundGridViewHolder> {
 
-    private ArrayList<Sound> sounds;
+    private ArrayList<SoundProxy> soundProxies;
+    private SoundButtonClickedListener soundButtonClickedListener;
 
-    public SoundGridAdapter() {
-        sounds = new ArrayList<>();
+    public SoundGridAdapter(SoundButtonClickedListener soundButtonClickedListener) {
+        this.soundButtonClickedListener = soundButtonClickedListener;
+        soundProxies = new ArrayList<>();
     }
 
-    public void setSounds(ArrayList<Sound> sounds) {
-        this.sounds = sounds;
+    public void addSoundProxy(SoundProxy proxy) {
+        soundProxies.add(proxy);
         this.notifyDataSetChanged();
     }
 
-    private Sound getSoundByID(int id) {
-        for (Sound sound : sounds) {
-            if (sound.getId() == id) {
-                return sound;
+    public void updateSoundProxy(SoundProxy proxy) {
+        for (int i = 0; i < soundProxies.size(); i++) {
+            if (soundProxies.get(i).soundID == proxy.soundID) {
+                soundProxies.set(i, proxy);
+                break;
             }
         }
-        return null;
+        this.notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public SoundGridViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_soundbutton, parent, false);
-        SoundGridViewHolder vh = new SoundGridViewHolder(v, this);
+        SoundGridViewHolder vh = new SoundGridViewHolder(v, soundButtonClickedListener);
         return vh;
     }
 
     @Override
     public void onBindViewHolder(@NonNull SoundGridViewHolder holder, int position) {
-        Sound sound = sounds.get(position);
-        sound.setSoundStatusListener(this);
-        holder.text.setText(sound.getSoundName());
-        holder.currentID = sound.getId();
-        holder.setState(sound.isPlaying());
-    }
-
-    @Override
-    public int getItemCount() {
-        Log.d("Soundmachine", "Asking Adapter for item count: " + sounds.size());
-        return sounds.size();
-    }
-
-    @Override
-    public void onSoundButtonClicked(int soundID) {
-        Sound clickedSound = getSoundByID(soundID);
-        if (clickedSound != null) {
-            clickedSound.toggle();
+        SoundProxy proxy = soundProxies.get(position);
+        holder.currentID = proxy.soundID;
+        holder.text.setText(proxy.soundTitle);
+        if (proxy.state == SoundState.PLAYING) {
+            holder.setPlayingState();
+        } else {
+            holder.setReadyState();
         }
     }
 
     @Override
-    public void onSoundStateChanged(Sound sound) {
-        this.notifyDataSetChanged();
+    public int getItemCount() {
+        return soundProxies.size();
     }
 
 }

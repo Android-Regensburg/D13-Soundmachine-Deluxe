@@ -8,32 +8,19 @@ import java.io.IOException;
 public class Sound implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
 
     private static int nextID = 0;
-    private final String soundName;
-    private boolean isReady;
-    private boolean isPlaying;
+    private int soundID;
+    private final String soundTitle;
+    private SoundState state;
     private SoundStatusListener listener;
     private MediaPlayer player;
-    private int id;
 
-    public Sound(AssetFileDescriptor soundFile, String soundName) {
-        this.soundName = soundName;
-        this.isReady = false;
-        this.isPlaying = false;
-        // Save current value of nextID, then increment for next time
-        this.id = nextID++;
-        prepareAudio(soundFile);
-    }
-
-    public void setSoundStatusListener(SoundStatusListener listener) {
+    public Sound(AssetFileDescriptor soundFile, String soundName, SoundStatusListener listener) {
+        this.soundTitle = soundName;
         this.listener = listener;
-    }
-
-    public String getSoundName() {
-        return soundName;
-    }
-
-    public int getId() {
-        return id;
+        // Save current value of nextID, then increment for next time
+        this.soundID = nextID++;
+        this.state = SoundState.LOADING;
+        prepareAudio(soundFile);
     }
 
     private void prepareAudio(AssetFileDescriptor soundFile) {
@@ -48,42 +35,44 @@ public class Sound implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPr
         }
     }
 
-    public void toggle() {
-        if (!isReady) {
+    public int getSoundID() {
+        return soundID;
+    }
+
+    public SoundState getSoundState() {
+        return state;
+    }
+
+    public SoundProxy getProxy() {
+        return new SoundProxy(soundID, soundTitle, state);
+    }
+
+    public void play() {
+        if(state != SoundState.READY) {
             return;
         }
-        if (!isPlaying) {
-            play();
-        } else {
-            stop();
-        }
-
-    }
-
-    private void play() {
         player.start();
-        isPlaying = true;
+        state = SoundState.PLAYING;
         if (listener != null) {
             listener.onSoundStateChanged(this);
         }
     }
 
-    private void stop() {
+    public void stop() {
+        if (state != SoundState.PLAYING) {
+            return;
+        }
         player.pause();
         player.seekTo(0);
-        isPlaying = false;
+        state = SoundState.READY;
         if (listener != null) {
             listener.onSoundStateChanged(this);
         }
-    }
-
-    public boolean isPlaying() {
-        return isPlaying;
     }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        isPlaying = false;
+        state = SoundState.READY;
         if (listener != null) {
             listener.onSoundStateChanged(this);
         }
@@ -91,9 +80,9 @@ public class Sound implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPr
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        isReady = true;
+        state = SoundState.READY;
         if (listener != null) {
-            listener.onSoundStateChanged(this);
+            listener.onSoundPrepared(this);
         }
     }
 }

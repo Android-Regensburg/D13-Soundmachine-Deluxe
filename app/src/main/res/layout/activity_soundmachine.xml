@@ -42,10 +42,11 @@
         android:id="@+id/app_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="25dp"
         android:text="@string/app_hint"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textColor="@color/colorText"
-        android:textSize="14sp" />
+        android:lineHeight="27sp"
+        android:textSize="18sp" />
 
 </LinearLayout>

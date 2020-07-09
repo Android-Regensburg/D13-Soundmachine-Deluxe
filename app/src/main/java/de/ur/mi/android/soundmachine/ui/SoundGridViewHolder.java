@@ -26,11 +26,11 @@ public class SoundGridViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void setState(boolean isPlaying) {
-        if (isPlaying) {
-            button.setBackgroundResource(R.drawable.button_background_playing);
-        } else {
-            button.setBackgroundResource(R.drawable.button_background);
-        }
+    public void setReadyState() {
+        button.setBackgroundResource(R.drawable.button_background);
+    }
+
+    public void setPlayingState() {
+        button.setBackgroundResource(R.drawable.button_background_playing);
     }
 }

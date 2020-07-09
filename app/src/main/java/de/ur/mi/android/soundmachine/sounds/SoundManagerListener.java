@@ -1,8 +1,8 @@
 package de.ur.mi.android.soundmachine.sounds;
 
-public interface SoundStatusListener {
+public interface SoundManagerListener {
 
-    void onSoundPrepared(Sound sound);
+    void onSoundReady(Sound sound);
     void onSoundStateChanged(Sound sound);
 
 }
