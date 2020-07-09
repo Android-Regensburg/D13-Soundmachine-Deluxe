@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">U13-Soundmachine</string>
+    <string name="app_main_title">Sound Machine</string>
+    <string name="app_main_description">Unbelivable hilarious sound effects!</string>
+    <string name="app_hint">Click all the buttons. Play all the sounds. Never stop laughing ;) </string>
+    <string-array name="sound_names">
+        <item>Akte X</item>
+        <item>Alert</item>
+        <item>Badumts! X</item>
+        <item>Cena</item>
+        <item>Crickets</item>
+        <item>Dolphin</item>
+        <item>Drums</item>
+        <item>Kobe</item>
+        <item>Scream</item>
+        <item>Hell no!</item>
+        <item>Suprise</item>
+        <item>To be continued ...</item>
+    </string-array>
+
+</resources>
