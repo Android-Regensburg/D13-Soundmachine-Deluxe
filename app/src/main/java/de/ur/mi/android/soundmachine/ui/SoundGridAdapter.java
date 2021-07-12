@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import de.ur.mi.android.soundmachine.R;
 import de.ur.mi.android.soundmachine.sounds.SoundProxy;
-import de.ur.mi.android.soundmachine.sounds.SoundState;
 
 public class SoundGridAdapter extends RecyclerView.Adapter<SoundGridViewHolder> {
 
@@ -47,14 +46,7 @@ public class SoundGridAdapter extends RecyclerView.Adapter<SoundGridViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull SoundGridViewHolder holder, int position) {
-        SoundProxy proxy = soundProxies.get(position);
-        holder.currentID = proxy.soundID;
-        holder.text.setText(proxy.soundTitle);
-        if (proxy.state == SoundState.PLAYING) {
-            holder.setPlayingState();
-        } else {
-            holder.setReadyState();
-        }
+        holder.bindSound(soundProxies.get(position));
     }
 
     @Override

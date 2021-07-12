@@ -7,12 +7,14 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.ur.mi.android.soundmachine.R;
+import de.ur.mi.android.soundmachine.sounds.SoundProxy;
+import de.ur.mi.android.soundmachine.sounds.SoundState;
 
 public class SoundGridViewHolder extends RecyclerView.ViewHolder {
 
-    public final ImageButton button;
-    public final TextView text;
-    public int currentID;
+    private final ImageButton button;
+    private final TextView text;
+    private int currentID;
 
     public SoundGridViewHolder(View v, final SoundButtonClickedListener listener) {
         super(v);
@@ -26,11 +28,13 @@ public class SoundGridViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void setReadyState() {
-        button.setBackgroundResource(R.drawable.button_background);
-    }
-
-    public void setPlayingState() {
-        button.setBackgroundResource(R.drawable.button_background_playing);
+    public void bindSound(SoundProxy sound) {
+        currentID = sound.soundID;
+        text.setText(sound.soundTitle);
+        if (sound.state == SoundState.PLAYING) {
+            button.setBackgroundResource(R.drawable.button_background_playing);
+        } else {
+            button.setBackgroundResource(R.drawable.button_background);
+        }
     }
 }
