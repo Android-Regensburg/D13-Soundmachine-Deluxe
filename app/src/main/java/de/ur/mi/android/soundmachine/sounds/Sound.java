@@ -8,11 +8,11 @@ import java.io.IOException;
 public class Sound implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
 
     private static int nextID = 0;
-    private int soundID;
+    private final int soundID;
     private final String soundTitle;
+    private final SoundStatusListener listener;
+    private final MediaPlayer player;
     private SoundState state;
-    private SoundStatusListener listener;
-    private MediaPlayer player;
 
     public Sound(AssetFileDescriptor soundFile, String soundName, SoundStatusListener listener) {
         this.soundTitle = soundName;
@@ -20,12 +20,12 @@ public class Sound implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPr
         // Save current value of nextID, then increment for next time
         this.soundID = nextID++;
         this.state = SoundState.LOADING;
-        prepareAudio(soundFile);
+        this.player = createMediaPlayerForFile(soundFile);
     }
 
-    private void prepareAudio(AssetFileDescriptor soundFile) {
+    private MediaPlayer createMediaPlayerForFile(AssetFileDescriptor soundFile) {
+        MediaPlayer player = new MediaPlayer();
         try {
-            player = new MediaPlayer();
             player.setOnPreparedListener(this);
             player.setOnCompletionListener(this);
             player.setDataSource(soundFile.getFileDescriptor(), soundFile.getStartOffset(), soundFile.getDeclaredLength());
@@ -33,6 +33,7 @@ public class Sound implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPr
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return player;
     }
 
     public int getSoundID() {
@@ -48,7 +49,7 @@ public class Sound implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPr
     }
 
     public void play() {
-        if(state != SoundState.READY) {
+        if (state != SoundState.READY) {
             return;
         }
         player.start();

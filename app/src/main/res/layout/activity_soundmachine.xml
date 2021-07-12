@@ -46,7 +46,7 @@
         android:text="@string/app_hint"
         android:textAlignment="textStart"
         android:textColor="@color/colorText"
-        android:lineHeight="27sp"
-        android:textSize="18sp" />
+        android:lineHeight="21sp"
+        android:textSize="14sp" />
 
 </LinearLayout>

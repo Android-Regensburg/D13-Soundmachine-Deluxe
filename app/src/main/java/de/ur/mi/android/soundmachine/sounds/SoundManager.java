@@ -7,17 +7,18 @@ import java.util.ArrayList;
 
 public class SoundManager implements SoundStatusListener {
 
-    private Context context;
-    private SoundManagerListener listener;
-    private ArrayList<Sound> sounds;
+    private final Context context;
+    private final SoundManagerListener listener;
+    private final ArrayList<Sound> sounds;
 
     public SoundManager(Context context, SoundManagerListener listener) {
         this.context = context;
         this.listener = listener;
+        sounds = new ArrayList<>();
     }
 
     public void loadSounds() {
-        sounds = new ArrayList<>();
+        sounds.clear();
         for (SoundAsset asset : SoundAsset.values()) {
             AssetFileDescriptor soundFile = context.getResources().openRawResourceFd(asset.id);
             Sound sound = new Sound(soundFile, asset.title, this);
@@ -27,6 +28,9 @@ public class SoundManager implements SoundStatusListener {
 
     public void toggleSound(int soundID) {
         Sound sound = getSoundByID(soundID);
+        if (sound == null) {
+            return;
+        }
         if (sound.getSoundState() == SoundState.PLAYING) {
             sound.stop();
         } else {

@@ -15,8 +15,8 @@ import de.ur.mi.android.soundmachine.sounds.SoundState;
 
 public class SoundGridAdapter extends RecyclerView.Adapter<SoundGridViewHolder> {
 
-    private ArrayList<SoundProxy> soundProxies;
-    private SoundButtonClickedListener soundButtonClickedListener;
+    private final ArrayList<SoundProxy> soundProxies;
+    private final SoundButtonClickedListener soundButtonClickedListener;
 
     public SoundGridAdapter(SoundButtonClickedListener soundButtonClickedListener) {
         this.soundButtonClickedListener = soundButtonClickedListener;
@@ -42,8 +42,7 @@ public class SoundGridAdapter extends RecyclerView.Adapter<SoundGridViewHolder> 
     @Override
     public SoundGridViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_soundbutton, parent, false);
-        SoundGridViewHolder vh = new SoundGridViewHolder(v, soundButtonClickedListener);
-        return vh;
+        return new SoundGridViewHolder(v, soundButtonClickedListener);
     }
 
     @Override

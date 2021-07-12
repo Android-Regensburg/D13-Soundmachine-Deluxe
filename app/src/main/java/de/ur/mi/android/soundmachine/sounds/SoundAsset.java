@@ -3,18 +3,18 @@ package de.ur.mi.android.soundmachine.sounds;
 import de.ur.mi.android.soundmachine.R;
 
 public enum SoundAsset {
-    X_FILES(R.raw.aktex, "X-Files"),
-    ALERT(R.raw.alert, "Alert"),
-    BADUMTS(R.raw.badumts, "Badumts!"),
-    CENA(R.raw.cena, "Cena"),
+    BADUMTS(R.raw.badumts, "Badumts"),
+    BELLS(R.raw.bells, "Bells"),
+    CAT(R.raw.cat, "Cat"),
+    COUNTDOWN(R.raw.countdown, "Countdown"),
     CRICKETS(R.raw.crickets, "Crickets"),
     DOLPHIN(R.raw.dolphin, "Dolphin"),
-    DRUMS(R.raw.drums, "Drums"),
-    KOBE(R.raw.kobe, "Kobe"),
-    SCREAM(R.raw.scream, "Scream"),
-    HELL_NO(R.raw.hellno, "Hell no!"),
-    SURPRISE(R.raw.surprise, "Surprise!"),
-    TO_BE_CONTINUED(R.raw.tobecontinued, "To be ...");
+    FART(R.raw.fart, "Fart"),
+    FUNKY(R.raw.funky, "Funky"),
+    OUTRO(R.raw.outro, "Outro"),
+    PAIN(R.raw.pain, "Pain"),
+    SCIFI(R.raw.scifi, "Scifi"),
+    WILHELM(R.raw.wilhelm, "Wilhelm");
 
     public final int id;
     public final String title;
