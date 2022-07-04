@@ -3,4 +3,5 @@
     <string name="app_main_title">The Sound Machine</string>
     <string name="app_main_description">Unbelievably hilarious sound effects!</string>
     <string name="app_hint">Click all the buttons. Play all the sounds. Never stop laughing. This is is an excellent Sound Machine. Enjoy wold finest sound snippets combined with a hand-crafted artisan user interface. Made with love and only the finest users in mind.</string>
+    <string name="button_description">A squared button with rounded corners and a centered play icon</string>
 </resources>

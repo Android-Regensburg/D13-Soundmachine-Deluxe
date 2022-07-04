@@ -24,7 +24,7 @@ public class SoundGridAdapter extends RecyclerView.Adapter<SoundGridViewHolder> 
 
     public void addSoundProxy(SoundProxy proxy) {
         soundProxies.add(proxy);
-        this.notifyDataSetChanged();
+        this.notifyItemChanged(soundProxies.indexOf(proxy));
     }
 
     public void updateSoundProxy(SoundProxy proxy) {
@@ -34,7 +34,7 @@ public class SoundGridAdapter extends RecyclerView.Adapter<SoundGridViewHolder> 
                 break;
             }
         }
-        this.notifyDataSetChanged();
+        this.notifyItemChanged(soundProxies.indexOf(proxy));
     }
 
     @NonNull
